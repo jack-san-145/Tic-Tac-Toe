@@ -1,0 +1,169 @@
+<html>
+    <head>
+        <title>Tic Tac Toe</title>
+    </head> 
+    <style>
+        .box {
+            background-color: grey;
+            height: 70px;
+            width: 70px;
+            margin: 2px;
+            padding-left: 20px;
+            padding-bottom: 10px;
+            
+        }
+        .three-box{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #container{
+            padding: 100px;
+        }
+        #restart{
+            margin-left: 750px;
+            padding: 10px;
+            padding-left: 50px;
+            padding-right: 50px;
+        }
+        body{
+            background-color: black;
+        }
+        .box:hover{
+            background-color:darkgray;
+        }
+        #restart:hover{
+            background-color: black;
+            box-shadow: 1px 0 10px #008cff,-1px 0 30px #e100ff;
+            transition: 0.4s;
+            color: white;
+        }
+
+    </style>
+    <body>
+    <div id="container">
+        <h1 style="font-size: 300%; margin-left: 450px; color: whitesmoke;" >Tic Tac Toe</h1>
+        <div class="three-box">
+            <div id="zero" class="box">
+            </div><br>
+            <div id="one" class="box"></div><br>
+            <div id="two" class="box"></div><br>
+        </div>
+        <div class="three-box">
+            <div id="three" class="box"></div><br>
+            <div id="four" class="box"></div><br>
+            <div id="five" class="box"></div><br>
+        </div>
+        <div class="three-box">
+            <div id="six" class="box"></div><br>
+            <div id="seven" class="box"></div><br>
+            <div id="eight" class="box"></div><br>
+        </div>
+        <button id="restart">Restart</button>
+    </div>
+    </body>
+    <script>
+        let isnotwon=true;
+        let obj1={};
+        const box_ids=['zero','one','two','three','four','five','six','seven','eight'];
+        let obj2={'zero':0,'one':0,'two':0,'three':0,'four':0,'five':0,'six':0,'seven':0,'eight':0}
+        let con=document.getElementById('container');
+        let choice=1;
+
+        con.addEventListener('click',(event)=>{
+            console.log(event.target.id)
+            let currentBoxId=event.target.id;
+            let id=document.getElementById(currentBoxId);
+            function display(choice){
+            if(choice%2!=0)
+                    {
+                    id.innerHTML='<h1 style="padding: 5px; font-size: 60px;margin: 5px;">x</h1>'
+                    obj2[currentBoxId]=1;
+                    }
+                    else if(choice%2==0){
+                        id.innerHTML='<h1 style="padding: 5px; font-size: 60px;margin: 5px;">o</h1>'
+                        obj2[currentBoxId]=2;
+                    }
+         }
+            if(id.className=='box')
+            {
+                if(!(currentBoxId in obj1))
+                {
+                    console.log(choice)
+                    display(choice);
+                    if(check()){
+                        setTimeout(()=>{alert('you won');restart();},500)
+                        display(choice);
+                        choice=0;
+                    }
+                    else if(isdraw()){
+                        setTimeout(()=>{alert('this match is draw');restart();},500)
+                        display(choice);
+                        choice=0;
+                    }
+                    console.log('hello')
+                    obj1[currentBoxId]='present';
+                    console.log(choice);
+                    choice+=1;
+                }
+        }
+            
+        })
+        let reset=document.getElementById('restart');
+        reset.addEventListener('click',(event)=>{
+            restart();
+        })
+        function restart(){
+            for(i in obj1)
+             {
+                id=document.getElementById(i);
+                id.textContent='';
+             }
+             console.log(obj1)
+             choice=1;
+             obj1={};
+             obj2={};
+             console.log(obj2);
+        }
+
+        function check(){
+            let iswon=false;
+            let condition=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+
+        function condition_checking(a,b,c){
+            
+            if(obj2[box_ids[a]]==obj2[box_ids[b]]){
+            if(obj2[box_ids[b]]==obj2[box_ids[c]]){
+                if(obj2[box_ids[a]]==1 || obj2[box_ids[a]]==2){
+                return iswon=true;}
+            }}
+        }
+
+        for(let i=0;i<condition.length;i++)
+            {
+                if(condition_checking(condition[i][0],condition[i][1],condition[i][2]))
+                {
+                    break;
+                }
+            }
+        return iswon;
+
+        }
+        function isdraw(){
+            let draw=false,counter=0;
+            for(let key in obj2)
+            {
+                if(obj2[key]==1 || obj2[key]==2)
+                {
+                    counter+=1;
+                }
+
+            }
+            if(counter==9){
+                draw=true;
+            }
+            return draw;
+        }
+        
+    </script>
+</html>
