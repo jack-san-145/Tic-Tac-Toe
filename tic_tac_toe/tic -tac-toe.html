@@ -71,7 +71,6 @@
         let choice=1;
 
         con.addEventListener('click',(event)=>{
-            console.log(event.target.id)
             let currentBoxId=event.target.id;
             let id=document.getElementById(currentBoxId);
             function display(choice){
@@ -89,7 +88,6 @@
             {
                 if(!(currentBoxId in obj1))
                 {
-                    console.log(choice)
                     display(choice);
                     if(check()){
                         setTimeout(()=>{alert('you won');restart();},500)
@@ -101,9 +99,7 @@
                         display(choice);
                         choice=0;
                     }
-                    console.log('hello')
                     obj1[currentBoxId]='present';
-                    console.log(choice);
                     choice+=1;
                 }
         }
@@ -119,11 +115,9 @@
                 id=document.getElementById(i);
                 id.textContent='';
              }
-             console.log(obj1)
              choice=1;
              obj1={};
              obj2={};
-             console.log(obj2);
         }
 
         function check(){
